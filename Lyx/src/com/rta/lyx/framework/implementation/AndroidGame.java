@@ -11,6 +11,7 @@ import android.os.PowerManager.WakeLock;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
 
 import com.rta.lyx.framework.Audio;
 import com.rta.lyx.framework.FileIO;
@@ -62,7 +63,9 @@ public abstract class AndroidGame extends Activity implements Game
 		setContentView(renderView);
 
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyGame");
+		
+		//wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyGame");
+		wakeLock = powerManager.newWakeLock(LayoutParams.FLAG_KEEP_SCREEN_ON, "MyGame");//MODIF
 	}
 
 	@Override
