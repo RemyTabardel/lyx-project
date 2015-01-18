@@ -1,7 +1,6 @@
 package com.rta.lyx.framework;
 
 import android.graphics.Paint;
-import android.media.Image;
 
 public interface Graphics
 {
