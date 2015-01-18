@@ -7,7 +7,6 @@ import android.os.Build.VERSION;
 import android.view.View;
 
 import com.rta.lyx.framework.Input;
-import com.rta.lyx.framework.Input.TouchEvent;
 
 public class AndroidInput implements Input {    
     TouchHandler touchHandler;
