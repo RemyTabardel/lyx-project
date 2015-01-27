@@ -1,4 +1,4 @@
-package com.rta.lyx.framework;
+package com.rta.lyx.framework.scene;
 
 public abstract class Screen
 {

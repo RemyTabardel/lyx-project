@@ -1,4 +1,4 @@
-package com.rta.lyx.framework.implementation;
+package com.rta.lyx.framework.scene;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,16 +13,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
-import com.rta.lyx.framework.FileIO;
-import com.rta.lyx.framework.Game;
-import com.rta.lyx.framework.Screen;
 import com.rta.lyx.framework.audio.AndroidAudio;
 import com.rta.lyx.framework.audio.Audio;
+import com.rta.lyx.framework.file.AndroidFileIO;
+import com.rta.lyx.framework.file.FileIO;
 import com.rta.lyx.framework.graphics.AndroidFastRenderView;
 import com.rta.lyx.framework.graphics.AndroidGraphics;
 import com.rta.lyx.framework.graphics.Graphics;
-import com.rta.lyx.framework.inputs.AndroidInput;
-import com.rta.lyx.framework.inputs.Input;
+import com.rta.lyx.framework.input.AndroidInput;
+import com.rta.lyx.framework.input.Input;
 
 public abstract class AndroidGame extends Activity implements Game
 {

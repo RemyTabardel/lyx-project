@@ -1,4 +1,4 @@
-package com.rta.lyx.framework;
+package com.rta.lyx.framework.file;
 
 import java.io.IOException;
 import java.io.InputStream;
