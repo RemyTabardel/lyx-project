@@ -1,10 +1,10 @@
-package com.rta.lyx.framework.inputs;
+package com.rta.lyx.framework.input;
 
 import java.util.List;
 
 import android.view.View.OnTouchListener;
 
-import com.rta.lyx.framework.inputs.Input.TouchEvent;
+import com.rta.lyx.framework.input.Input.TouchEvent;
 
 public interface TouchHandler extends OnTouchListener {
     public boolean isTouchDown(int pointer);
