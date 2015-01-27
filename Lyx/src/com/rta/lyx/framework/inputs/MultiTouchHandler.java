@@ -1,4 +1,4 @@
-package com.rta.lyx.framework.implementation;
+package com.rta.lyx.framework.inputs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.rta.lyx.framework.Input.TouchEvent;
 import com.rta.lyx.framework.Pool;
 import com.rta.lyx.framework.Pool.PoolObjectFactory;
+import com.rta.lyx.framework.inputs.Input.TouchEvent;
 
 public class MultiTouchHandler implements TouchHandler
 {

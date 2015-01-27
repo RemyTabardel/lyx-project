@@ -1,6 +1,6 @@
-package com.rta.lyx.framework;
+package com.rta.lyx.framework.graphics;
 
-import com.rta.lyx.framework.Graphics.ImageFormat;
+import com.rta.lyx.framework.graphics.Graphics.ImageFormat;
 
 public interface Image
 {

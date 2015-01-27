@@ -1,4 +1,4 @@
-package com.rta.lyx.framework.implementation;
+package com.rta.lyx.framework.audio;
 
 import java.io.IOException;
 
@@ -7,10 +7,6 @@ import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
-
-import com.rta.lyx.framework.Audio;
-import com.rta.lyx.framework.Music;
-import com.rta.lyx.framework.Sound;
 
 public class AndroidAudio implements Audio {
     AssetManager assets;

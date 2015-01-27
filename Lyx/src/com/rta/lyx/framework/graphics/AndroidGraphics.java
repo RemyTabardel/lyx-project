@@ -1,4 +1,4 @@
-package com.rta.lyx.framework.implementation;
+package com.rta.lyx.framework.graphics;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,9 +12,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
-
-import com.rta.lyx.framework.Graphics;
-import com.rta.lyx.framework.Image;
 
 public class AndroidGraphics implements Graphics
 {

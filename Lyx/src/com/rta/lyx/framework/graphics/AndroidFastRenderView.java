@@ -1,4 +1,6 @@
-package com.rta.lyx.framework.implementation;
+package com.rta.lyx.framework.graphics;
+
+import com.rta.lyx.framework.implementation.AndroidGame;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
