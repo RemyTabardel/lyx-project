@@ -1,14 +1,37 @@
 package com.rta.lyx.framework.graphics;
 
+import android.graphics.Bitmap;
+
 import com.rta.lyx.framework.graphics.Graphics.ImageFormat;
 
-public interface Image
+public class Image
 {
-	public int getWidth();
+	Bitmap		bitmap;
+	ImageFormat	format;
 
-	public int getHeight();
+	public Image(Bitmap bitmap, ImageFormat format)
+	{
+		this.bitmap = bitmap;
+		this.format = format;
+	}
 
-	public ImageFormat getFormat();
+	public int getWidth()
+	{
+		return bitmap.getWidth();
+	}
 
-	public void dispose();
+	public int getHeight()
+	{
+		return bitmap.getHeight();
+	}
+
+	public ImageFormat getFormat()
+	{
+		return format;
+	}
+
+	public void dispose()
+	{
+		bitmap.recycle();
+	}
 }
