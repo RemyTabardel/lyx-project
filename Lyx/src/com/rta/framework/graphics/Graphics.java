@@ -1,4 +1,4 @@
-package com.rta.lyx.framework.graphics;
+package com.rta.framework.graphics;
 
 import java.io.IOException;
 import java.io.InputStream;

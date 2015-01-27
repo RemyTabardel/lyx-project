@@ -1,7 +1,7 @@
 package com.rta.lyx;
 
-import com.rta.lyx.framework.scene.Game;
-import com.rta.lyx.framework.scene.Screen;
+import com.rta.framework.scene.Game;
+import com.rta.framework.scene.Screen;
 
 public class MainScreen extends Screen
 {
