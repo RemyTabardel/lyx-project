@@ -2,8 +2,13 @@ package com.rta.lyx.framework.input;
 
 import java.util.List;
 
-public interface Input
+import android.content.Context;
+import android.os.Build.VERSION;
+import android.view.View;
+
+public class Input
 {
+	TouchHandler	touchHandler;
 
 	public static class TouchEvent
 	{
@@ -17,12 +22,33 @@ public interface Input
 		public int				pointer;
 
 	}
+	
+	public Input(Context context, View view, float scaleX, float scaleY)
+	{
+		if (VERSION.SDK_INT < 5)
+			touchHandler = new SingleTouchHandler(view, scaleX, scaleY);
+		else
+			touchHandler = new MultiTouchHandler(view, scaleX, scaleY);
+	}
 
-	public boolean isTouchDown(int pointer);
+	public boolean isTouchDown(int pointer)
+	{
+		return touchHandler.isTouchDown(pointer);
+	}
 
-	public int getTouchX(int pointer);
+	public int getTouchX(int pointer)
+	{
+		return touchHandler.getTouchX(pointer);
+	}
 
-	public int getTouchY(int pointer);
+	public int getTouchY(int pointer)
+	{
+		return touchHandler.getTouchY(pointer);
+	}
 
-	public List<TouchEvent> getTouchEvents();
+	public List<TouchEvent> getTouchEvents()
+	{
+		return touchHandler.getTouchEvents();
+	}
+
 }

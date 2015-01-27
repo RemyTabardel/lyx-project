@@ -1,6 +1,6 @@
 package com.rta.lyx.framework.graphics;
 
-import com.rta.lyx.framework.scene.AndroidGame;
+import com.rta.lyx.framework.scene.Game;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -8,15 +8,15 @@ import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class AndroidFastRenderView extends SurfaceView implements Runnable
+public class FastRenderView extends SurfaceView implements Runnable
 {
-	AndroidGame			game;
+	Game			game;
 	Bitmap				framebuffer;
 	Thread				renderThread	= null;
 	SurfaceHolder		holder;
 	volatile boolean	running			= false;
 
-	public AndroidFastRenderView(AndroidGame game, Bitmap framebuffer)
+	public FastRenderView(Game game, Bitmap framebuffer)
 	{
 		super(game);
 		this.game = game;

@@ -1,9 +1,9 @@
 package com.rta.lyx;
 
-import com.rta.lyx.framework.scene.AndroidGame;
+import com.rta.lyx.framework.scene.Game;
 import com.rta.lyx.framework.scene.Screen;
 
-public class MainActivity extends AndroidGame
+public class MainActivity extends Game
 {
 
 	@Override
