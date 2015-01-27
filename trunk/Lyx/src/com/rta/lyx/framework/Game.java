@@ -1,5 +1,9 @@
 package com.rta.lyx.framework;
 
+import com.rta.lyx.framework.audio.Audio;
+import com.rta.lyx.framework.graphics.Graphics;
+import com.rta.lyx.framework.inputs.Input;
+
 public interface Game
 {
 

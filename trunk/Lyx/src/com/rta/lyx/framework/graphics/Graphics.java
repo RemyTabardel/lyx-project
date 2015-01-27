@@ -1,4 +1,4 @@
-package com.rta.lyx.framework;
+package com.rta.lyx.framework.graphics;
 
 import android.graphics.Paint;
 

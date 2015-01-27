@@ -1,4 +1,4 @@
-package com.rta.lyx.framework.implementation;
+package com.rta.lyx.framework.audio;
 
 import java.io.IOException;
 
@@ -8,8 +8,6 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaPlayer.OnSeekCompleteListener;
 import android.media.MediaPlayer.OnVideoSizeChangedListener;
-
-import com.rta.lyx.framework.Music;
 
 public class AndroidMusic implements Music, OnCompletionListener, OnSeekCompleteListener, OnPreparedListener, OnVideoSizeChangedListener
 {

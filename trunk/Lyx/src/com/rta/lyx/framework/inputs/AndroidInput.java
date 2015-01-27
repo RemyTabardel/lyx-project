@@ -1,12 +1,10 @@
-package com.rta.lyx.framework.implementation;
+package com.rta.lyx.framework.inputs;
 
 import java.util.List;
 
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.view.View;
-
-import com.rta.lyx.framework.Input;
 
 public class AndroidInput implements Input
 {

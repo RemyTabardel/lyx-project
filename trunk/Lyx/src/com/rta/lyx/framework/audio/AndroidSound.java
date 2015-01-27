@@ -1,8 +1,6 @@
-package com.rta.lyx.framework.implementation;
+package com.rta.lyx.framework.audio;
 
 import android.media.SoundPool;
-
-import com.rta.lyx.framework.Sound;
 
 public class AndroidSound implements Sound
 {

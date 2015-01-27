@@ -1,4 +1,4 @@
-package com.rta.lyx.framework;
+package com.rta.lyx.framework.audio;
 
 public interface Audio {
     public Music createMusic(String file);

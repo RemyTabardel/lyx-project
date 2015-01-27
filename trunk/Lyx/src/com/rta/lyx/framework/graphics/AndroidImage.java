@@ -1,10 +1,9 @@
-package com.rta.lyx.framework.implementation;
+package com.rta.lyx.framework.graphics;
 
 
 import android.graphics.Bitmap;
 
-import com.rta.lyx.framework.Graphics.ImageFormat;
-import com.rta.lyx.framework.Image;
+import com.rta.lyx.framework.graphics.Graphics.ImageFormat;
 
 public class AndroidImage implements Image {
     Bitmap bitmap;
