@@ -15,13 +15,13 @@ import android.view.WindowManager.LayoutParams;
 
 import com.rta.lyx.framework.audio.AndroidAudio;
 import com.rta.lyx.framework.audio.Audio;
-import com.rta.lyx.framework.file.AndroidFileIO;
-import com.rta.lyx.framework.file.FileIO;
 import com.rta.lyx.framework.graphics.AndroidFastRenderView;
 import com.rta.lyx.framework.graphics.AndroidGraphics;
 import com.rta.lyx.framework.graphics.Graphics;
 import com.rta.lyx.framework.input.AndroidInput;
 import com.rta.lyx.framework.input.Input;
+import com.rta.lyx.framework.system.AndroidFileIO;
+import com.rta.lyx.framework.system.FileIO;
 
 public abstract class AndroidGame extends Activity implements Game
 {
