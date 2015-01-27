@@ -25,8 +25,7 @@ public class MultiTouchHandler implements TouchHandler
 
 	public MultiTouchHandler(View view, float scaleX, float scaleY)
 	{
-		PoolObjectFactory<TouchEvent> factory = new PoolObjectFactory<TouchEvent>()
-		{
+		PoolObjectFactory<TouchEvent> factory = new PoolObjectFactory<TouchEvent>() {
 			@Override
 			public TouchEvent createObject()
 			{
