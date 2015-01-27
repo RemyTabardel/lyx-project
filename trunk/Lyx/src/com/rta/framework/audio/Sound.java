@@ -1,4 +1,4 @@
-package com.rta.lyx.framework.audio;
+package com.rta.framework.audio;
 
 import android.media.SoundPool;
 

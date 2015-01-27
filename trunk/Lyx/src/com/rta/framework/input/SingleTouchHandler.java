@@ -1,4 +1,4 @@
-package com.rta.lyx.framework.input;
+package com.rta.framework.input;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,8 @@ import java.util.List;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.rta.lyx.framework.input.Input.TouchEvent;
-import com.rta.lyx.framework.scene.Pool;
-import com.rta.lyx.framework.scene.Pool.PoolObjectFactory;
+import com.rta.framework.input.Input.TouchEvent;
+import com.rta.framework.input.Pool.PoolObjectFactory;
 
 public class SingleTouchHandler implements TouchHandler
 {

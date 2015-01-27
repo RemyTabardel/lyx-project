@@ -1,4 +1,4 @@
-package com.rta.lyx.framework.input;
+package com.rta.framework.input;
 
 import java.util.List;
 

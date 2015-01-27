@@ -1,8 +1,8 @@
-package com.rta.lyx.framework.graphics;
+package com.rta.framework.graphics;
 
 import android.graphics.Bitmap;
 
-import com.rta.lyx.framework.graphics.Graphics.ImageFormat;
+import com.rta.framework.graphics.Graphics.ImageFormat;
 
 public class Image
 {

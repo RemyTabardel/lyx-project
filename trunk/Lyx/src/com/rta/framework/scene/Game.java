@@ -1,4 +1,4 @@
-package com.rta.lyx.framework.scene;
+package com.rta.framework.scene;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,15 +13,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
-import com.rta.lyx.framework.audio.Audio;
-import com.rta.lyx.framework.audio.Audio;
-import com.rta.lyx.framework.graphics.FastRenderView;
-import com.rta.lyx.framework.graphics.Graphics;
-import com.rta.lyx.framework.graphics.Graphics;
-import com.rta.lyx.framework.input.Input;
-import com.rta.lyx.framework.input.Input;
-import com.rta.lyx.framework.system.FileIO;
-import com.rta.lyx.framework.system.FileIO;
+import com.rta.framework.audio.Audio;
+import com.rta.framework.graphics.FastRenderView;
+import com.rta.framework.graphics.Graphics;
+import com.rta.framework.input.Input;
+import com.rta.framework.system.FileIO;
 
 public abstract class Game extends Activity
 {
