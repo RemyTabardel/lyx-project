@@ -10,7 +10,7 @@ public class MainActivity extends Game
 	public Screen getInitScreen()
 	{
 		// TODO Auto-generated method stub
-		return new MainScreen(this);
+		return new AssetsScreen(this);
 	}
 
 	/*@Override

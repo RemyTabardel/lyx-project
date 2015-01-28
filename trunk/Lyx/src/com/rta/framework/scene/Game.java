@@ -63,8 +63,8 @@ public abstract class Game extends Activity
 
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		
-		//wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyGame");
-		wakeLock = powerManager.newWakeLock(LayoutParams.FLAG_KEEP_SCREEN_ON, "MyGame");//MODIF
+		wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyGame");
+		//wakeLock = powerManager.newWakeLock(LayoutParams.FLAG_KEEP_SCREEN_ON, "MyGame");//MODIF
 	}
 
 	public abstract Screen getInitScreen();
