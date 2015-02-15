@@ -7,11 +7,13 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The class extends the Thread class so we can receive and send messages at the same time
  */
-public class Server extends Thread
+public class Server extends Thread implements MessageReceiver
 {
 
 	public static final int		SERVERPORT	= 4444;
@@ -19,6 +21,8 @@ public class Server extends Thread
 	private PrintWriter			mOut;
 	private OnMessageReceived	messageListener;
 
+	private List<Client> listClients = new ArrayList<Client>();
+	
 	public void setRunning(boolean running)
 	{
 		this.running = running;
@@ -58,6 +62,29 @@ public class Server extends Thread
 		running = true;
 
 		try
+		{
+			System.out.println("S: Waiting connections...");
+
+			// create a server socket. A server socket waits for requests to
+			// come in over the network.
+			ServerSocket serverSocket = new ServerSocket(SERVERPORT);
+
+			while (running)
+			{
+				// create client socket... the method accept() listens for a connection to be made to this socket and accepts it.
+				Socket socket = serverSocket.accept();
+				Client client = new Client(socket, this);
+				
+				listClients.add(client);
+				
+				client.start();
+			}
+		}
+		catch (Exception e)
+		{
+
+		}
+		/*try
 		{
 			System.out.println("S: Waiting connections...");
 
@@ -109,15 +136,85 @@ public class Server extends Thread
 		{
 			System.out.println("S: Error");
 			e.printStackTrace();
-		}
+		}*/
+		
+		
+		
+
+		/*
+		 * 
+			private static byte[]		data		= new byte[255];
+			try
+			{
+				for (int i = 0; i < data.length; i++)
+					data[i] = (byte) i;
+
+				ServerSocketChannel server = ServerSocketChannel.open();
+				server.configureBlocking(false);
+
+				server.socket().bind(new InetSocketAddress(4444));
+				Selector selector = Selector.open();
+				server.register(selector, SelectionKey.OP_ACCEPT);
+
+				while (true)
+				{
+					selector.select(500);
+					Set<SelectionKey> readyKeys = selector.selectedKeys();
+					Iterator<SelectionKey> iterator = readyKeys.iterator();
+					
+					while (iterator.hasNext())
+					{
+						SelectionKey key = (SelectionKey) iterator.next();
+						iterator.remove();
+						if (key.isAcceptable())
+						{
+							SocketChannel client = server.accept();
+							System.out.println("Accepted connection from " + client);
+							client.configureBlocking(false);
+							ByteBuffer source = ByteBuffer.wrap(data);
+							SelectionKey key2 = client.register(selector, SelectionKey.OP_WRITE);
+							key2.attach(source);
+						}
+						else if (key.isWritable())
+						{
+							SocketChannel client = (SocketChannel) key.channel();
+							ByteBuffer output = (ByteBuffer) key.attachment();
+							if (!output.hasRemaining())
+							{
+								output.rewind();
+							}
+							client.write(output);
+						}
+						else if (key.isReadable())
+						{
+
+						}
+
+						key.channel().close();
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		 */
 
 	}
 
+	
 	// Declare the interface. The method messageReceived(String message) will must be implemented in the ServerBoard
 	// class at on startServer button click
 	public interface OnMessageReceived
 	{
 		public void messageReceived(String message);
+	}
+
+	@Override
+	public void onReceive(String message)
+	{
+		messageListener.messageReceived(message);
+		
 	}
 
 }

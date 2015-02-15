@@ -96,6 +96,7 @@ public class ServerBoard extends JFrame
 				buttonStart.setEnabled(true);
 				buttonStop.setEnabled(false);
 				
+				//server.stop();
 				server.setRunning(false);
 			}
 		});
