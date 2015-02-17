@@ -104,8 +104,8 @@ public class Server extends Thread implements MessageReceiver
 		          // Get the keys corresponding to the activity
 		          // that has been detected, and process them
 		          // one by one
-		          Set keys = selector.selectedKeys();
-		          Iterator it = keys.iterator();
+		          Set<SelectionKey> keys = selector.selectedKeys();
+		          Iterator<SelectionKey> it = keys.iterator();
 		          while (it.hasNext()) {
 		            // Get a key representing one of bits of I/O
 		            // activity

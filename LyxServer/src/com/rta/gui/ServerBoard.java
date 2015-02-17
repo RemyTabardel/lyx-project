@@ -5,6 +5,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -12,6 +14,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -54,15 +57,13 @@ public class ServerBoard extends JFrame
 
 		JPanel panelFieldsButtons = new JPanel();
 		panelFieldsButtons.setLayout(new GridBagLayout());
-		
+
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
-		gbc.gridy = GridBagConstraints.RELATIVE; 
+		gbc.gridy = GridBagConstraints.RELATIVE;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(2, 2, 2, 2);
-		 
-		 
-		
+
 		JPanel panelFields2 = new JPanel();
 		panelFields2.setLayout(new BoxLayout(panelFields2, BoxLayout.X_AXIS));
 
@@ -71,6 +72,13 @@ public class ServerBoard extends JFrame
 		textAreaMessage.setColumns(30);
 		textAreaMessage.setRows(10);
 		textAreaMessage.setEditable(false);
+		JScrollPane scroll = new JScrollPane(textAreaMessage);
+		scroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			public void adjustmentValueChanged(AdjustmentEvent e)
+			{
+				e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+			}
+		});
 
 		buttonSend = new JButton("Send");
 		buttonSend.addActionListener(new ActionListener() {
@@ -90,17 +98,17 @@ public class ServerBoard extends JFrame
 		buttonStop = new JButton("Stop");
 		buttonStop.setEnabled(false);
 		buttonStop.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent arg0)
 			{
 				buttonStart.setEnabled(true);
 				buttonStop.setEnabled(false);
-				
-				//server.stop();
+
+				// server.stop();
 				server.setRunning(false);
 			}
 		});
-		
+
 		buttonStart = new JButton("Start");
 		buttonStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
@@ -131,10 +139,10 @@ public class ServerBoard extends JFrame
 		// add the buttons and the text fields to the panel
 		panelFieldsButtons.add(buttonStart, gbc);
 		panelFieldsButtons.add(buttonStop, gbc);
-		
-		panelFields.add(textAreaMessage);
+
+		panelFields.add(scroll);
 		panelFields.add(panelFieldsButtons);
-		
+
 		panelFields2.add(textFieldMessage);
 		panelFields2.add(buttonSend);
 
