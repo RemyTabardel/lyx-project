@@ -1,24 +1,24 @@
 package com.rta.lyxclient;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.Socket;
-
-import android.util.Log;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
 
 public class TCPClient
 {
 
 	private String				serverMessage;
-	public static final String	SERVERIP			= "192.168.1.10";	// your computer IP address
+	public static final String	SERVERIP			= "192.168.71.239";	// your computer IP address
 	public static final int		SERVERPORT			= 4444;
 	private OnMessageReceived	mMessageListener	= null;
 	private boolean				mRun				= false;
-
+	 SocketChannel channel;
+	  
 	PrintWriter					out;
 	BufferedReader				in;
 
@@ -36,13 +36,35 @@ public class TCPClient
 	 * @param message
 	 *            text entered by client
 	 */
-	public void sendMessage(String message)
+	public void sendMessage(final String message)
 	{
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run()
+			{
+		        CharBuffer buffer = CharBuffer.wrap(message);
+		        while (buffer.hasRemaining()) {
+		            try
+					{
+						channel.write(Charset.defaultCharset().encode(buffer));
+					}
+					catch (IOException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        }
+				
+			}
+		}).start();
+
+		/*
 		if (out != null && !out.checkError())
 		{
 			out.println(message);
 			out.flush();
-		}
+		}*/
 	}
 
 	public void stopClient()
@@ -56,6 +78,43 @@ public class TCPClient
 		mRun = true;
 
 		try
+		{
+		channel = SocketChannel.open();
+		 
+        // we open this channel in non blocking mode
+        channel.configureBlocking(false);
+        channel.connect(new InetSocketAddress(SERVERIP, SERVERPORT));
+        
+        while (!channel.finishConnect()) {
+            // System.out.println("still connecting");
+        }
+        
+		while (mRun)
+		{
+	           ByteBuffer bufferA = ByteBuffer.allocate(20);
+	            int count = 0;
+	            String message = "";
+	            while ((count = channel.read(bufferA)) > 0) {
+	                // flip the buffer to start reading
+	                bufferA.flip();
+	                message += Charset.defaultCharset().decode(bufferA);
+	 
+	            }
+	            
+				if (message != null && mMessageListener != null && message.equals("")==false)
+				{
+					// call the method messageReceived from MyActivity class
+					mMessageListener.messageReceived(message);
+				}
+				message = null;
+		}
+		}
+		catch(Exception e)
+		{
+			
+		}
+        
+		/*try
 		{
 			// here you must put your computer's IP address.
 			InetAddress serverAddr = InetAddress.getByName(SERVERIP);
@@ -114,7 +173,7 @@ public class TCPClient
 
 			Log.e("TCP", "C: Error", e);
 
-		}
+		}*/
 
 	}
 
