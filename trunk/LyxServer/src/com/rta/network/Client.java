@@ -15,7 +15,6 @@ public class Client
 		super();
 		this.socket = socket;
 		this.socketChannel = socketChannel;
-		this.timeout = new Date();
 	}
 
 	public Socket getSocket()

@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -33,6 +34,8 @@ public class Server extends Thread
 	private Selector			selector;
 	private ServerBoard			serverBoard;
 	private final ByteBuffer	buffer;
+	private Charset				charset;
+
 	private List<Client>		listClients;
 
 	public Server(ServerBoard serverBoard)
@@ -41,6 +44,7 @@ public class Server extends Thread
 		this.listClients = new ArrayList<Client>();
 		this.buffer = ByteBuffer.allocate(BUFFER_SIZE);
 		this.running = false;
+		this.charset = Charset.forName("ISO-8859-1");
 	}
 
 	public void setRunning(boolean running)
@@ -57,19 +61,32 @@ public class Server extends Thread
 	{
 		for (Client client : listClients)
 		{
-			CharBuffer buffer = CharBuffer.wrap(message);
-			while (buffer.hasRemaining())
+			try
 			{
-				try
-				{
-					client.getSocketChannel().write(Charset.defaultCharset().encode(buffer));
-				}
-				catch (IOException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				client.getSocketChannel().register(selector, SelectionKey.OP_WRITE, message);
 			}
+			catch (ClosedChannelException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			/*
+			 * CharBuffer buffer = CharBuffer.wrap(message); while (buffer.hasRemaining()) { try { client.getSocketChannel().write(this.charset.encode(buffer)); } catch (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); } }
+			 */
+		}
+	}
+
+	private void disconnect(SelectionKey key)
+	{
+		SocketChannel socketChannel = (SocketChannel) key.channel();
+		try
+		{
+			socketChannel.finishConnect();
+		}
+		catch (IOException e)
+		{
+			// Cancel the channel's registration with our selector
+			key.cancel();
 		}
 	}
 
@@ -77,8 +94,6 @@ public class Server extends Thread
 	{
 		try
 		{
-			log("accept()");
-
 			// C'est une nouvelle connexion, on enregistre la socket dans le selector afin de recevoir les entrées
 			Socket clientSocket = serverSocket.accept();
 
@@ -89,8 +104,11 @@ public class Server extends Thread
 			clientSocketChannel.configureBlocking(false);
 
 			// On enregistre dans le selector pour la lecture
-			clientSocketChannel.register(selector, SelectionKey.OP_READ);
+			clientSocketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
 
+			CharBuffer buffer = CharBuffer.wrap("Salut");
+			clientSocketChannel.write(this.charset.encode(buffer));
+			
 			listClients.add(new Client(clientSocket, clientSocketChannel));
 
 		}
@@ -98,6 +116,15 @@ public class Server extends Thread
 		{
 
 		}
+	}
+
+	private void write(SelectionKey key)
+	{
+		/*
+		 * SocketChannel channel = (SocketChannel) key.channel(); String message = (String) key.attachment();
+		 * 
+		 * CharBuffer buffer = CharBuffer.wrap(message); while (buffer.hasRemaining()) { try { channel.write(this.charset.encode(buffer)); } catch (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); } }
+		 */
 	}
 
 	private void read(SelectionKey key)
@@ -110,7 +137,7 @@ public class Server extends Thread
 			if (bytesRead > 0)
 			{
 				buffer.flip();
-				String message = Charset.defaultCharset().decode(buffer).toString();
+				String message = this.charset.decode(buffer).toString();
 
 				log(message);
 
@@ -181,6 +208,10 @@ public class Server extends Thread
 					else if ((key.readyOps() & SelectionKey.OP_READ) == SelectionKey.OP_READ)
 					{
 						read(key);
+					}
+					else if ((key.readyOps() & SelectionKey.OP_WRITE) == SelectionKey.OP_WRITE)
+					{
+						write(key);
 					}
 				}
 
