@@ -50,8 +50,8 @@ public class FastRenderView extends SurfaceView implements Runnable
 				deltaTime = (float) 3.15;
 			}
 
-			game.getCurrentScreen().update(deltaTime);
-			game.getCurrentScreen().paint(deltaTime);
+			game.update(deltaTime);
+			game.paint(deltaTime);
 
 			Canvas canvas = holder.lockCanvas();
 			canvas.getClipBounds(dstRect);
