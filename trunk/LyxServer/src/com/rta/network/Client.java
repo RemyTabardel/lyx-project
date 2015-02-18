@@ -1,52 +1,31 @@
 package com.rta.network;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.Socket;
+import java.nio.channels.SocketChannel;
 import java.util.Date;
 
-public class Client extends Thread
+public class Client
 {
 	private Socket			socket;
-	private boolean			running;
-	private MessageReceiver	messageReceiver;
-	private Date			timeout;			// permet de voir si le joueur
-												// est absent au bouton d'un
-												// moment
+	private SocketChannel	socketChannel;
+	private Date			timeout;		// permet de savoir si on a rien reçu pendant un moment pour le déconnecter
 
-	public Client(Socket socket, MessageReceiver messageReceiver)
+	public Client(Socket socket, SocketChannel socketChannel)
 	{
+		super();
 		this.socket = socket;
-		this.messageReceiver = messageReceiver;
-		this.running = true;
-		timeout = new Date();
+		this.socketChannel = socketChannel;
+		this.timeout = new Date();
 	}
 
-	@Override
-	public void run()
+	public Socket getSocket()
 	{
-		try
-		{
-			// read the message received from client
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-			// in this while we wait to receive messages from client (it's an
-			// infinite loop)
-			// this while it's like a listener for messages
-			while (running)
-			{
-				String message = in.readLine();
-
-				if (message != null)
-				{
-					messageReceiver.onReceive(message);
-					System.out.println(message);
-				}
-			}
-		}
-		catch (Exception e)
-		{
-
-		}
+		return socket;
 	}
+
+	public SocketChannel getSocketChannel()
+	{
+		return socketChannel;
+	}
+
 }

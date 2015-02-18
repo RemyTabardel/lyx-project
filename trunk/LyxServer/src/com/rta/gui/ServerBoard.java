@@ -47,11 +47,18 @@ public class ServerBoard extends JFrame
 		return hostAddress;
 	}
 
+	public void writeLine(String line)
+	{
+		textAreaMessage.append(line + "\n");
+	}
+	
 	public ServerBoard()
 	{
 
 		super("LyxServer : " + getHostAddress());
 
+		server = new Server(this);
+		
 		JPanel panelFields = new JPanel();
 		panelFields.setLayout(new BoxLayout(panelFields, BoxLayout.X_AXIS));
 
@@ -87,9 +94,10 @@ public class ServerBoard extends JFrame
 				// get the message from the text view
 				String messageText = textFieldMessage.getText();
 				// add message to the message area
-				textAreaMessage.append("\n" + messageText);
+				writeLine(messageText);
+				server.send(messageText);
 				// send the message to the client
-				server.sendMessage(messageText);
+				//server.sendMessage(messageText);
 				// clear text
 				textFieldMessage.setText("");
 			}
@@ -117,16 +125,7 @@ public class ServerBoard extends JFrame
 				buttonStart.setEnabled(false);
 				buttonStop.setEnabled(true);
 				// creates the object OnMessageReceived asked by the TCPServer constructor
-				server = new Server(new Server.OnMessageReceived() {
-
-					// this method declared in the interface from TCPServer class is implemented here
-					// this method is actually a callback method, because it will run every time when it will be called from
-					// TCPServer class (at while)
-					public void messageReceived(String message)
-					{
-						textAreaMessage.append("\n " + message);
-					}
-				});
+			
 				server.start();
 
 			}
