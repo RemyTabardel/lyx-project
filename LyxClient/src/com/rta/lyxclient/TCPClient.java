@@ -17,6 +17,7 @@ public class TCPClient
 	public static final int		SERVERPORT			= 4444;
 	private OnMessageReceived	mMessageListener	= null;
 	private boolean				mRun				= false;
+	private Charset				charset;
 	 SocketChannel channel;
 	  
 	PrintWriter					out;
@@ -28,6 +29,7 @@ public class TCPClient
 	public TCPClient(OnMessageReceived listener)
 	{
 		mMessageListener = listener;
+		this.charset = Charset.forName("ISO-8859-1");
 	}
 
 	/**
@@ -47,7 +49,7 @@ public class TCPClient
 		        while (buffer.hasRemaining()) {
 		            try
 					{
-						channel.write(Charset.defaultCharset().encode(buffer));
+						channel.write(charset.encode(buffer));
 					}
 					catch (IOException e)
 					{
@@ -97,7 +99,7 @@ public class TCPClient
 	            while ((count = channel.read(bufferA)) > 0) {
 	                // flip the buffer to start reading
 	                bufferA.flip();
-	                message += Charset.defaultCharset().decode(bufferA);
+	                message += charset.decode(bufferA);
 	 
 	            }
 	            
