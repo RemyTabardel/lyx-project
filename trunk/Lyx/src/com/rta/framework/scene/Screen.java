@@ -1,14 +1,7 @@
 package com.rta.framework.scene;
 
-public abstract class Screen
+interface Screen
 {
-	protected final Game	game;
-
-	public Screen(Game game)
-	{
-		this.game = game;
-	}
-
 	public abstract void update(float deltaTime);
 
 	public abstract void paint(float deltaTime);

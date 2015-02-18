@@ -19,15 +19,17 @@ import com.rta.framework.graphics.Graphics;
 import com.rta.framework.input.Input;
 import com.rta.framework.system.FileIO;
 
-public abstract class Game extends Activity
+public abstract class Game extends Activity implements Screen
 {
-	FastRenderView	renderView;
-	Graphics				graphics;
-	Audio					audio;
-	Input					input;
-	FileIO					fileIO;
-	Screen					screen;
-	WakeLock				wakeLock;
+	public static final int	SCREEN_WIDTH	= 1280;
+	public static final int	SCREEN_HEIGHT	= 800;
+
+	private FastRenderView			renderView;
+	private Graphics				graphics;
+	private Audio					audio;
+	private Input					input;
+	private FileIO					fileIO;
+	private WakeLock				wakeLock;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -38,54 +40,53 @@ public abstract class Game extends Activity
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		boolean isPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
-		int frameBufferWidth = isPortrait ? 800 : 1280;
-		int frameBufferHeight = isPortrait ? 1280 : 800;
+		int frameBufferWidth = isPortrait ? SCREEN_HEIGHT : SCREEN_WIDTH;
+		int frameBufferHeight = isPortrait ? SCREEN_WIDTH : SCREEN_HEIGHT;
 		Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth, frameBufferHeight, Config.RGB_565);
 
-		//////////////////////////////////////////////////////////////////////
-//		float scaleX = (float) frameBufferWidth / getWindowManager().getDefaultDisplay().getWidth();
-//		float scaleY = (float) frameBufferHeight / getWindowManager().getDefaultDisplay().getHeight();
+		// ////////////////////////////////////////////////////////////////////
+		// float scaleX = (float) frameBufferWidth / getWindowManager().getDefaultDisplay().getWidth();
+		// float scaleY = (float) frameBufferHeight / getWindowManager().getDefaultDisplay().getHeight();
 
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
 		float scaleX = (float) frameBufferWidth / metrics.widthPixels;
 		float scaleY = (float) frameBufferHeight / metrics.heightPixels;
-		///////////////////////////////////////////////////////////////////////
-		
+		// /////////////////////////////////////////////////////////////////////
+
 		renderView = new FastRenderView(this, frameBuffer);
 		graphics = new Graphics(getAssets(), frameBuffer);
 		fileIO = new FileIO(this);
 		audio = new Audio(this);
 		input = new Input(this, renderView, scaleX, scaleY);
-		screen = getInitScreen();
 		setContentView(renderView);
 
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		
+
 		wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyGame");
-		//wakeLock = powerManager.newWakeLock(LayoutParams.FLAG_KEEP_SCREEN_ON, "MyGame");//MODIF
+		// wakeLock = powerManager.newWakeLock(LayoutParams.FLAG_KEEP_SCREEN_ON, "MyGame");//MODIF
 	}
 
-	public abstract Screen getInitScreen();
-	
+	@Override
 	public void onResume()
 	{
 		super.onResume();
 		wakeLock.acquire();
-		screen.resume();
+		this.resume();
 		renderView.resume();
 	}
 
+	@Override
 	public void onPause()
 	{
 		super.onPause();
 		wakeLock.release();
 		renderView.pause();
-		screen.pause();
+		this.pause();
 
 		if (isFinishing())
-			screen.dispose();
+			this.dispose();
 	}
 
 	public Input getInput()
@@ -106,23 +107,5 @@ public abstract class Game extends Activity
 	public Audio getAudio()
 	{
 		return audio;
-	}
-
-	public void setScreen(Screen screen)
-	{
-		if (screen == null)
-			throw new IllegalArgumentException("Screen must not be null");
-
-		this.screen.pause();
-		this.screen.dispose();
-		screen.resume();
-		screen.update(0);
-		this.screen = screen;
-	}
-
-	public Screen getCurrentScreen()
-	{
-
-		return screen;
 	}
 }
