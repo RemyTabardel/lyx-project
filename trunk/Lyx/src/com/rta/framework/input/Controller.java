@@ -36,19 +36,19 @@ public class Controller
 			TouchEvent touchEvent = touchEvents.get(i);
 			Vector2 point = new Vector2(touchEvent.x, touchEvent.y);
 
-			if (dpad.isTouchUp(point))
+			if (dpad.isPressUp(point))
 			{
 				events.up = true;
 			}
-			else if (dpad.isTouchDown(point))
+			else if (dpad.isPressDown(point))
 			{
 				events.down = true;
 			}
-			else if (dpad.isTouchLeft(point))
+			else if (dpad.isPressLeft(point))
 			{
 				events.left = true;
 			}
-			else if (dpad.isTouchRight(point))
+			else if (dpad.isPressRight(point))
 			{
 				events.right = true;
 			}

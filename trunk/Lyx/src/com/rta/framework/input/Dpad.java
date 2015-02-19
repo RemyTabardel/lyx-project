@@ -25,22 +25,22 @@ public class Dpad
 		boundingAABB[RIGHT] = new BoundingAABB(new Vector2(position.x + (width / 2) + (height / 2), position.y), width, height);
 	}
 
-	public boolean isTouchDown(Vector2 point)
+	public boolean isPressDown(Vector2 point)
 	{
 		return boundingAABB[DOWN].isCollide(point);
 	}
 
-	public boolean isTouchUp(Vector2 point)
+	public boolean isPressUp(Vector2 point)
 	{
 		return boundingAABB[UP].isCollide(point);
 	}
 
-	public boolean isTouchLeft(Vector2 point)
+	public boolean isPressLeft(Vector2 point)
 	{
 		return boundingAABB[LEFT].isCollide(point);
 	}
 
-	public boolean isTouchRight(Vector2 point)
+	public boolean isPressRight(Vector2 point)
 	{
 		return boundingAABB[RIGHT].isCollide(point);
 	}
