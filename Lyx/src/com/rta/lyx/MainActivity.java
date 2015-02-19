@@ -21,9 +21,9 @@ public class MainActivity extends Game
 	public void paint(float deltaTime)
 	{
 		int x = 600;
-		int y = 100;
+		int y = 300;
 		
-		Dpad dpad = new Dpad(new Vector2(x, y), 100, 40);
+		Dpad dpad = new Dpad(80, 70);
 		
 		Graphics g = this.getGraphics();
 		g.clearScreen(Color.BLACK);
@@ -33,7 +33,7 @@ public class MainActivity extends Game
 		g.drawBoundingShape(dpad.boundingAABB[2], Color.GREEN);
 		g.drawBoundingShape(dpad.boundingAABB[3], Color.GREEN);
 		
-		g.drawCircle(x, y, 10, Color.RED);
+		//g.drawCircle(x, y, 10, Color.RED);
 		// g.drawRect((int)joyx+50, (int)joyy+50, 100, 100, Color.BLUE);
 		// g.drawRect(1040, 0, 240, 800, Color.RED);
 		// g.drawImage(Assets.getImage("img1"), (int)posx, (int)posy);
