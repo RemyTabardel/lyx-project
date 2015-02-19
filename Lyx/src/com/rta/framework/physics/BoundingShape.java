@@ -23,4 +23,5 @@ public abstract class BoundingShape
 		this.position = position;
 	}
 
+	public abstract boolean isCollide(Vector2 point);
 }

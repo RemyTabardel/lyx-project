@@ -1,23 +1,27 @@
 package com.rta.framework.scene;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Bitmap.Config;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.WindowManager.LayoutParams;
 
 import com.rta.framework.audio.Audio;
 import com.rta.framework.graphics.FastRenderView;
 import com.rta.framework.graphics.Graphics;
+import com.rta.framework.input.Controller;
+import com.rta.framework.input.Events;
 import com.rta.framework.input.Input;
+import com.rta.framework.input.Input.TouchEvent;
 import com.rta.framework.system.FileIO;
 
 public abstract class Game extends Activity implements Screen
@@ -31,6 +35,7 @@ public abstract class Game extends Activity implements Screen
 	private Input			input;
 	private FileIO			fileIO;
 	private WakeLock		wakeLock;
+	private Controller		controller		= new Controller();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -70,20 +75,26 @@ public abstract class Game extends Activity implements Screen
 	}
 
 	@Override
-	public void update(Float deltaTime)
+	public void update(float deltaTime)
 	{
+		List<TouchEvent> touchEvents = input.getTouchEvents();
 
+		update(deltaTime, controller.getEvents(touchEvents));
 	}
 
 	@Override
-	public void paint(Float deltaTime)
+	public void paint(float deltaTime)
 	{
-
+		graphics.clearScreen(Color.BLACK);
+		
+		controller.paintdDebug(getGraphics());
+		
+		paint();
 	}
 
-	public abstract void update(float deltaTime);
+	public abstract void update(float deltaTime, Events events);
 
-	public abstract void paint(float deltaTime);
+	public abstract void paint();
 
 	@Override
 	public void onResume()

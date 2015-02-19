@@ -17,4 +17,11 @@ public class BoundingOBB extends BoundingShape
 		
 	}
 
+	@Override
+	public boolean isCollide(Vector2 point)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
