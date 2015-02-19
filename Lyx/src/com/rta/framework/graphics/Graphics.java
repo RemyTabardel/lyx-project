@@ -3,6 +3,8 @@ package com.rta.framework.graphics;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.rta.framework.physics.BoundingAABB;
+
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -96,6 +98,11 @@ public class Graphics
 		canvas.drawLine(x, y, x2, y2, paint);
 	}
 
+	public void drawBoundingShape(BoundingAABB boundingAABB, int color)
+	{
+		drawRect((int)boundingAABB.getPointTopLeft().getX(), (int)boundingAABB.getPointTopLeft().getY(), boundingAABB.getWidth(), boundingAABB.getHeight(), color);
+	}
+
 	public void drawRect(int x, int y, int width, int height, int color)
 	{
 		paint.setColor(color);
@@ -107,10 +114,10 @@ public class Graphics
 	{
 		paint.setColor(color);
 		paint.setStyle(Style.FILL);
-		
+
 		canvas.drawCircle(x, y, radius, paint);
 	}
-	
+
 	public void drawARGB(int a, int r, int g, int b)
 	{
 		paint.setStyle(Style.FILL);

@@ -2,9 +2,9 @@ package com.rta.framework.scene;
 
 interface Screen
 {
-	public abstract void update(float deltaTime);
+	public abstract void update(Float deltaTime);
 
-	public abstract void paint(float deltaTime);
+	public abstract void paint(Float deltaTime);
 
 	public abstract void pause();
 

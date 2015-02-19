@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -24,12 +25,12 @@ public abstract class Game extends Activity implements Screen
 	public static final int	SCREEN_WIDTH	= 1280;
 	public static final int	SCREEN_HEIGHT	= 800;
 
-	private FastRenderView			renderView;
-	private Graphics				graphics;
-	private Audio					audio;
-	private Input					input;
-	private FileIO					fileIO;
-	private WakeLock				wakeLock;
+	private FastRenderView	renderView;
+	private Graphics		graphics;
+	private Audio			audio;
+	private Input			input;
+	private FileIO			fileIO;
+	private WakeLock		wakeLock;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -67,6 +68,22 @@ public abstract class Game extends Activity implements Screen
 		wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyGame");
 		// wakeLock = powerManager.newWakeLock(LayoutParams.FLAG_KEEP_SCREEN_ON, "MyGame");//MODIF
 	}
+
+	@Override
+	public void update(Float deltaTime)
+	{
+
+	}
+
+	@Override
+	public void paint(Float deltaTime)
+	{
+
+	}
+
+	public abstract void update(float deltaTime);
+
+	public abstract void paint(float deltaTime);
 
 	@Override
 	public void onResume()
