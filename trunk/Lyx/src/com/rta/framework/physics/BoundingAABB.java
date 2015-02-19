@@ -18,8 +18,8 @@ public class BoundingAABB extends BoundingShape
 	private Vector2 computePointTopLeft()
 	{
 		Vector2 point = new Vector2();
-		point.setX(position.getX() - (width / 2));
-		point.setY(position.getY() - (height / 2));
+		point.x = position.x - (width / 2);
+		point.y = position.y - (height / 2);
 
 		return point;
 	}
@@ -60,7 +60,25 @@ public class BoundingAABB extends BoundingShape
 	{
 		return pointTopLeft;
 	}
-	
-	
+
+	@Override
+	public boolean isCollide(Vector2 point)
+	{
+		if (point.x >= this.pointTopLeft.x)
+		{
+			if (point.x < (this.pointTopLeft.x + this.width))
+			{
+				if (point.y >= this.pointTopLeft.y)
+				{
+					if (point.y < (this.pointTopLeft.y + this.height))
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
 
 }

@@ -1,42 +1,67 @@
 package com.rta.lyx;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.graphics.Color;
 
 import com.rta.framework.graphics.Graphics;
-import com.rta.framework.input.Dpad;
+import com.rta.framework.input.Events;
 import com.rta.framework.math.Vector2;
-import com.rta.framework.physics.BoundingAABB;
 import com.rta.framework.scene.Game;
 
 public class MainActivity extends Game
 {
+	List<Vector2>	listPoints	= new ArrayList<Vector2>();
+	int				x, y;
+
 	@Override
-	public void update(float deltaTime)
+	public void update(float deltaTime, Events events)
 	{
-		// TODO Auto-generated method stub
+		x = 0;
+		y = 0;
+		
+		if (events.a == true)
+		{
+			listPoints.add(new Vector2(Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT / 2));
+		}
+		if (events.b == true)
+		{
+			if (listPoints.size() > 0)
+			{
+				listPoints.remove(0);
+			}
+		}
+		if (events.up)
+		{
+			y = -1;
+		}
+		if (events.down)
+		{
+			y = 1;
+		}
+		if (events.right)
+		{
+			x = 1;
+		}
+		if (events.left)
+		{
+			x = -1;
+		}
 
 	}
 
 	@Override
-	public void paint(float deltaTime)
+	public void paint()
 	{
-		int x = 600;
-		int y = 300;
-		
-		Dpad dpad = new Dpad(80, 70);
-		
-		Graphics g = this.getGraphics();
-		g.clearScreen(Color.BLACK);
-		// g.drawRect(0, 500, 300, 300, Color.RED);
-		g.drawBoundingShape(dpad.boundingAABB[0], Color.GREEN);
-		g.drawBoundingShape(dpad.boundingAABB[1], Color.GREEN);
-		g.drawBoundingShape(dpad.boundingAABB[2], Color.GREEN);
-		g.drawBoundingShape(dpad.boundingAABB[3], Color.GREEN);
-		
-		//g.drawCircle(x, y, 10, Color.RED);
-		// g.drawRect((int)joyx+50, (int)joyy+50, 100, 100, Color.BLUE);
-		// g.drawRect(1040, 0, 240, 800, Color.RED);
-		// g.drawImage(Assets.getImage("img1"), (int)posx, (int)posy);
+		Graphics g = getGraphics();
+
+		for (Vector2 point : listPoints)
+		{
+			point.x += (x * 1);
+			point.y += (y * 1);
+			g.drawCircle((int) point.x, (int) point.y, 20, Color.RED);
+		}
 	}
 
 	@Override

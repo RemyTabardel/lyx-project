@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.rta.framework.physics.BoundingAABB;
+import com.rta.framework.physics.BoundingCircle;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -100,7 +101,12 @@ public class Graphics
 
 	public void drawBoundingShape(BoundingAABB boundingAABB, int color)
 	{
-		drawRect((int)boundingAABB.getPointTopLeft().getX(), (int)boundingAABB.getPointTopLeft().getY(), boundingAABB.getWidth(), boundingAABB.getHeight(), color);
+		drawRect((int) boundingAABB.getPointTopLeft().x, (int) boundingAABB.getPointTopLeft().y, boundingAABB.getWidth(), boundingAABB.getHeight(), color);
+	}
+
+	public void drawBoundingShape(BoundingCircle boundingCircle, int color)
+	{
+		drawCircle((int)boundingCircle.getPosition().x, (int)boundingCircle.getPosition().y, boundingCircle.getRadius(), color);
 	}
 
 	public void drawRect(int x, int y, int width, int height, int color)

@@ -19,9 +19,29 @@ public class Dpad
 		this.position = new Vector2(0 + width + (height / 2), Game.SCREEN_HEIGHT - width - (height / 2));
 		boundingAABB = new BoundingAABB[4];
 
-		boundingAABB[UP] = new BoundingAABB(new Vector2(position.getX(), position.getY() - (width / 2) - (height / 2)), height, width);
-		boundingAABB[DOWN] = new BoundingAABB(new Vector2(position.getX(), position.getY() + (width / 2) + (height / 2)), height, width);
-		boundingAABB[LEFT] = new BoundingAABB(new Vector2(position.getX() - (width / 2) - (height / 2), position.getY()), width, height);
-		boundingAABB[RIGHT] = new BoundingAABB(new Vector2(position.getX() + (width / 2) + (height / 2), position.getY()), width, height);
+		boundingAABB[UP] = new BoundingAABB(new Vector2(position.x, position.y - (width / 2) - (height / 2)), height, width);
+		boundingAABB[DOWN] = new BoundingAABB(new Vector2(position.x, position.y + (width / 2) + (height / 2)), height, width);
+		boundingAABB[LEFT] = new BoundingAABB(new Vector2(position.x - (width / 2) - (height / 2), position.y), width, height);
+		boundingAABB[RIGHT] = new BoundingAABB(new Vector2(position.x + (width / 2) + (height / 2), position.y), width, height);
+	}
+
+	public boolean isTouchDown(Vector2 point)
+	{
+		return boundingAABB[DOWN].isCollide(point);
+	}
+
+	public boolean isTouchUp(Vector2 point)
+	{
+		return boundingAABB[UP].isCollide(point);
+	}
+
+	public boolean isTouchLeft(Vector2 point)
+	{
+		return boundingAABB[LEFT].isCollide(point);
+	}
+
+	public boolean isTouchRight(Vector2 point)
+	{
+		return boundingAABB[RIGHT].isCollide(point);
 	}
 }
