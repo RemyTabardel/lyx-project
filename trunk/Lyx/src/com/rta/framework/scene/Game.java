@@ -78,8 +78,9 @@ public abstract class Game extends Activity implements Screen
 	public void update(float deltaTime)
 	{
 		List<TouchEvent> touchEvents = input.getTouchEvents();
-
-		update(deltaTime, controller.getEvents(touchEvents));
+		Events events = controller.getEvents(touchEvents);
+		
+		update(deltaTime, events);
 	}
 
 	@Override

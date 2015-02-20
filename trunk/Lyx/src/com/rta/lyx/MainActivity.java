@@ -58,9 +58,10 @@ public class MainActivity extends Game
 
 		for (Vector2 point : listPoints)
 		{
-			point.x += (x * 10);
-			point.y += (y * 10);
+			point.x += (x * 2);
+			point.y += (y * 2);
 			g.drawCircle((int) point.x, (int) point.y, 20, Color.RED);
+		
 		}
 	}
 

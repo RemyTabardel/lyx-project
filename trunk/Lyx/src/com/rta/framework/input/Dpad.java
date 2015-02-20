@@ -12,36 +12,39 @@ public class Dpad
 	private static final int	RIGHT	= 3;
 
 	private Vector2				position;
-	public BoundingAABB[]		boundingAABB;
+	public BoundingAABB[]		arBoundingAABB;
+	public BoundingAABB		boundingAABB;
 
-	public Dpad(int width, int height)
+	public Dpad(int buttonWidth, int buttonHeight)
 	{
-		this.position = new Vector2(0 + width + (height / 2), Game.SCREEN_HEIGHT - width - (height / 2));
-		boundingAABB = new BoundingAABB[4];
-
-		boundingAABB[UP] = new BoundingAABB(new Vector2(position.x, position.y - (width / 2) - (height / 2)), height, width);
-		boundingAABB[DOWN] = new BoundingAABB(new Vector2(position.x, position.y + (width / 2) + (height / 2)), height, width);
-		boundingAABB[LEFT] = new BoundingAABB(new Vector2(position.x - (width / 2) - (height / 2), position.y), width, height);
-		boundingAABB[RIGHT] = new BoundingAABB(new Vector2(position.x + (width / 2) + (height / 2), position.y), width, height);
+		this.position = new Vector2(0 + buttonWidth + (buttonHeight / 2), Game.SCREEN_HEIGHT - buttonWidth - (buttonHeight / 2));
+		
+		boundingAABB = new BoundingAABB(position, buttonWidth*4, buttonHeight*4);
+		
+		arBoundingAABB = new BoundingAABB[4];
+		arBoundingAABB[UP] = new BoundingAABB(new Vector2(position.x, position.y - (buttonWidth / 2) - (buttonHeight / 2)), buttonHeight, buttonWidth);
+		arBoundingAABB[DOWN] = new BoundingAABB(new Vector2(position.x, position.y + (buttonWidth / 2) + (buttonHeight / 2)), buttonHeight, buttonWidth);
+		arBoundingAABB[LEFT] = new BoundingAABB(new Vector2(position.x - (buttonWidth / 2) - (buttonHeight / 2), position.y), buttonWidth, buttonHeight);
+		arBoundingAABB[RIGHT] = new BoundingAABB(new Vector2(position.x + (buttonWidth / 2) + (buttonHeight / 2), position.y), buttonWidth, buttonHeight);
 	}
 
 	public boolean isPressDown(Vector2 point)
 	{
-		return boundingAABB[DOWN].isCollide(point);
+		return arBoundingAABB[DOWN].isCollide(point);
 	}
 
 	public boolean isPressUp(Vector2 point)
 	{
-		return boundingAABB[UP].isCollide(point);
+		return arBoundingAABB[UP].isCollide(point);
 	}
 
 	public boolean isPressLeft(Vector2 point)
 	{
-		return boundingAABB[LEFT].isCollide(point);
+		return arBoundingAABB[LEFT].isCollide(point);
 	}
 
 	public boolean isPressRight(Vector2 point)
 	{
-		return boundingAABB[RIGHT].isCollide(point);
+		return arBoundingAABB[RIGHT].isCollide(point);
 	}
 }
