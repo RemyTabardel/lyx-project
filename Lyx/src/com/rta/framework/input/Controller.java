@@ -15,6 +15,7 @@ public class Controller
 {
 	private Dpad	dpad;
 	private Button	buttonA, buttonB;
+	Events			events	= new Events();
 
 	public Controller()
 	{
@@ -28,34 +29,49 @@ public class Controller
 
 	public Events getEvents(List<TouchEvent> touchEvents)
 	{
-		Events events = new Events();
-
 		int len = touchEvents.size();
 		for (int i = 0; i < len; i++)
 		{
 			TouchEvent touchEvent = touchEvents.get(i);
 			Vector2 point = new Vector2(touchEvent.x, touchEvent.y);
 
-			if (touchEvent.type == TouchEvent.TOUCH_DOWN)
+			events.a = false;
+			events.b = false;
+
+			if (touchEvent.type == TouchEvent.TOUCH_DRAGGED)
 			{
-				if (dpad.isPressUp(point))
+				if (dpad.boundingAABB.isCollide(point) == true)
 				{
-					events.up = true;
+					events.up = dpad.isPressUp(point);
+					events.down = dpad.isPressDown(point);
+					events.left = dpad.isPressLeft(point);
+					events.right = dpad.isPressRight(point);
 				}
-				else if (dpad.isPressDown(point))
+			}
+			else if (touchEvent.type == TouchEvent.TOUCH_DOWN)
+			{
+				if (dpad.boundingAABB.isCollide(point) == true)
 				{
-					events.down = true;
-				}
-				else if (dpad.isPressLeft(point))
-				{
-					events.left = true;
-				}
-				else if (dpad.isPressRight(point))
-				{
-					events.right = true;
+					if (dpad.isPressUp(point))
+					{
+						events.up = true;
+					}
+					else if (dpad.isPressDown(point))
+					{
+						events.down = true;
+					}
+					else if (dpad.isPressLeft(point))
+					{
+						events.left = true;
+					}
+					else if (dpad.isPressRight(point))
+					{
+						events.right = true;
+					}
 				}
 				else
 				{
+
 					if (buttonA.isClicked(point))
 					{
 						events.a = true;
@@ -66,6 +82,28 @@ public class Controller
 					}
 				}
 			}
+			else if (touchEvent.type == TouchEvent.TOUCH_UP)
+			{
+				if (dpad.boundingAABB.isCollide(point) == true)
+				{
+					if (dpad.isPressUp(point))
+					{
+						events.up = false;
+					}
+					else if (dpad.isPressDown(point))
+					{
+						events.down = false;
+					}
+					else if (dpad.isPressLeft(point))
+					{
+						events.left = false;
+					}
+					else if (dpad.isPressRight(point))
+					{
+						events.right = false;
+					}
+				}
+			}
 		}
 
 		return events;
@@ -73,10 +111,11 @@ public class Controller
 
 	public void paintdDebug(Graphics g)// D
 	{
-		g.drawBoundingShape(dpad.boundingAABB[0], Color.GREEN);
-		g.drawBoundingShape(dpad.boundingAABB[1], Color.GREEN);
-		g.drawBoundingShape(dpad.boundingAABB[2], Color.GREEN);
-		g.drawBoundingShape(dpad.boundingAABB[3], Color.GREEN);
+		// g.drawBoundingShape(dpad.boundingAABB, Color.BLUE);
+		g.drawBoundingShape(dpad.arBoundingAABB[0], Color.GREEN);
+		g.drawBoundingShape(dpad.arBoundingAABB[1], Color.GREEN);
+		g.drawBoundingShape(dpad.arBoundingAABB[2], Color.GREEN);
+		g.drawBoundingShape(dpad.arBoundingAABB[3], Color.GREEN);
 
 		g.drawBoundingShape((BoundingCircle) buttonA.getBoundingShape(), Color.RED);
 		g.drawBoundingShape((BoundingCircle) buttonB.getBoundingShape(), Color.RED);

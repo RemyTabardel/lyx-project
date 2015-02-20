@@ -15,7 +15,7 @@ public class FastRenderView extends SurfaceView implements Runnable
 	Thread				renderThread	= null;
 	SurfaceHolder		holder;
 	volatile boolean	running			= false;
-
+	
 	public FastRenderView(Game game, Bitmap framebuffer)
 	{
 		super(game);
