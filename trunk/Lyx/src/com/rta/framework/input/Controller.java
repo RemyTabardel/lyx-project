@@ -30,13 +30,13 @@ public class Controller
 	public Events getEvents(List<TouchEvent> touchEvents)
 	{
 		int len = touchEvents.size();
+		events.a = false;
+		events.b = false;
+
 		for (int i = 0; i < len; i++)
 		{
 			TouchEvent touchEvent = touchEvents.get(i);
 			Vector2 point = new Vector2(touchEvent.x, touchEvent.y);
-
-			events.a = false;
-			events.b = false;
 
 			if (touchEvent.type == TouchEvent.TOUCH_DRAGGED)
 			{
@@ -109,7 +109,7 @@ public class Controller
 		return events;
 	}
 
-	public void paintdDebug(Graphics g)// D
+	public void paint(Graphics g)// D
 	{
 		// g.drawBoundingShape(dpad.boundingAABB, Color.BLUE);
 		g.drawBoundingShape(dpad.arBoundingAABB[0], Color.GREEN);

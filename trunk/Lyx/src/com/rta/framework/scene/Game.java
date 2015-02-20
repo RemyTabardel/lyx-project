@@ -1,5 +1,6 @@
 package com.rta.framework.scene;
 
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -8,6 +9,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -35,7 +37,8 @@ public abstract class Game extends Activity implements Screen
 	private Input			input;
 	private FileIO			fileIO;
 	private WakeLock		wakeLock;
-	private Controller		controller		= new Controller();
+	private Controller		controller;
+	private FPS				fps;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -66,6 +69,9 @@ public abstract class Game extends Activity implements Screen
 		fileIO = new FileIO(this);
 		audio = new Audio(this);
 		input = new Input(this, renderView, scaleX, scaleY);
+		controller = new Controller();
+		fps = new FPS(graphics);
+
 		setContentView(renderView);
 
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -79,7 +85,9 @@ public abstract class Game extends Activity implements Screen
 	{
 		List<TouchEvent> touchEvents = input.getTouchEvents();
 		Events events = controller.getEvents(touchEvents);
-		
+
+		fps.update();
+
 		update(deltaTime, events);
 	}
 
@@ -87,10 +95,11 @@ public abstract class Game extends Activity implements Screen
 	public void paint(float deltaTime)
 	{
 		graphics.clearScreen(Color.BLACK);
-		
-		controller.paintdDebug(getGraphics());
-		
+
 		paint();
+		
+		fps.paint(graphics);
+		controller.paint(getGraphics());
 	}
 
 	public abstract void update(float deltaTime, Events events);

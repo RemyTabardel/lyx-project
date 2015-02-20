@@ -10,12 +10,12 @@ import android.view.SurfaceView;
 
 public class FastRenderView extends SurfaceView implements Runnable
 {
-	Game			game;
+	Game				game;
 	Bitmap				framebuffer;
 	Thread				renderThread	= null;
 	SurfaceHolder		holder;
 	volatile boolean	running			= false;
-	
+
 	public FastRenderView(Game game, Bitmap framebuffer)
 	{
 		super(game);
@@ -33,6 +33,7 @@ public class FastRenderView extends SurfaceView implements Runnable
 
 	}
 
+	@Override
 	public void run()
 	{
 		Rect dstRect = new Rect();
@@ -49,7 +50,7 @@ public class FastRenderView extends SurfaceView implements Runnable
 			{
 				deltaTime = (float) 3.15;
 			}
-
+		
 			game.update(deltaTime);
 			game.paint(deltaTime);
 
