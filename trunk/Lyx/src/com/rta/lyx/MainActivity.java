@@ -5,7 +5,9 @@ import java.util.List;
 
 import android.graphics.Color;
 
+import com.rta.framework.graphics.Animation;
 import com.rta.framework.graphics.Graphics;
+import com.rta.framework.graphics.SpriteSheet;
 import com.rta.framework.input.Events;
 import com.rta.framework.math.Vector2;
 import com.rta.framework.scene.Game;
@@ -14,10 +16,15 @@ public class MainActivity extends Game
 {
 	List<Vector2>	listPoints	= new ArrayList<Vector2>();
 	int				x, y;
-
+	
+	Animation animation = new Animation(16, 10, true);
+	SpriteSheet ss;
+	
 	@Override
 	public void update(float deltaTime, Events events)
 	{
+		animation.update(deltaTime);
+		
 		x = 0;
 		y = 0;
 		
@@ -54,15 +61,22 @@ public class MainActivity extends Game
 	@Override
 	public void paint()
 	{
-		Graphics g = getGraphics();
+		Graphics graphics = getGraphics();
 
 		for (Vector2 point : listPoints)
 		{
 			point.x += (x * 2);
 			point.y += (y * 2);
-			g.drawCircle((int) point.x, (int) point.y, 20, Color.RED);
+			graphics.drawCircle((int) point.x, (int) point.y, 20, Color.RED);
 		
 		}
+		
+		if(ss == null)
+		{
+			ss = new SpriteSheet("", graphics);
+		}
+		
+		ss.paint(graphics, animation, x, y);
 	}
 
 	@Override

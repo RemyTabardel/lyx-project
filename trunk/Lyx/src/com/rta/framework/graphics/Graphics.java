@@ -38,6 +38,37 @@ public class Graphics
 		this.paint = new Paint();
 	}
 
+	public boolean checkAsset(String fileName)
+	{
+		InputStream in = null;
+		boolean value = true;
+		
+		try
+		{
+			in = assets.open(fileName);
+		}
+		catch (IOException e)
+		{
+			value = false;
+		}
+		finally
+		{
+			if(in != null)
+			{
+				try
+				{
+					in.close();
+				}
+				catch (IOException e)
+				{
+					
+				}
+			}
+		}
+		
+		return value;
+	}
+	
 	public Image newImage(String fileName, ImageFormat format)
 	{
 		Config config = null;
@@ -62,7 +93,9 @@ public class Graphics
 		}
 		catch (IOException e)
 		{
-			throw new RuntimeException("Couldn't load bitmap from asset '" + fileName + "'");
+			//throw new RuntimeException("Couldn't load bitmap from asset '" + fileName + "'");
+			
+			return null;
 		}
 		finally
 		{
