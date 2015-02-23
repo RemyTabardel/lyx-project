@@ -25,7 +25,7 @@ public class Animation
 
 			if (currentTime >= maxTime)
 			{
-				currentTime = 0.0f;
+				currentTime = currentTime - maxTime;
 				currentFrame++;
 
 				if (currentFrame >= maxFrames)
