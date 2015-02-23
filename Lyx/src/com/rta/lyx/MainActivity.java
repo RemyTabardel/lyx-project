@@ -17,7 +17,7 @@ public class MainActivity extends Game
 	List<Vector2>	listPoints	= new ArrayList<Vector2>();
 	int				x, y;
 	
-	Animation animation = new Animation(16, 10, true);
+	Animation animation = new Animation(16, 100, true);
 	SpriteSheet ss;
 	
 	@Override
