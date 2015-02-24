@@ -1,6 +1,5 @@
 package com.rta.framework.scene;
 
-import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -9,7 +8,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -31,6 +29,7 @@ public abstract class Game extends Activity implements Screen
 	public static final int	SCREEN_WIDTH	= 1280;
 	public static final int	SCREEN_HEIGHT	= 800;
 
+	private FastUpdateLogic	updateLogic;
 	private FastRenderView	renderView;
 	private Graphics		graphics;
 	private Audio			audio;
@@ -38,7 +37,8 @@ public abstract class Game extends Activity implements Screen
 	private FileIO			fileIO;
 	private WakeLock		wakeLock;
 	private Controller		controller;
-	private FPS				fps;
+	private FPS				fpsLogic;
+	private FPS				fpsRender;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -64,14 +64,16 @@ public abstract class Game extends Activity implements Screen
 		float scaleY = (float) frameBufferHeight / metrics.heightPixels;
 		// /////////////////////////////////////////////////////////////////////
 
+		updateLogic = new FastUpdateLogic(this);
 		renderView = new FastRenderView(this, frameBuffer);
 		graphics = new Graphics(getAssets(), frameBuffer);
 		fileIO = new FileIO(this);
 		audio = new Audio(this);
 		input = new Input(this, renderView, scaleX, scaleY);
 		controller = new Controller();
-		fps = new FPS(graphics);
-
+		fpsLogic = new FPS(graphics, "FPS (Thread logic)", 40);
+		fpsRender = new FPS(graphics, "FPS (Thread render)", 80);
+		
 		setContentView(renderView);
 
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -86,8 +88,8 @@ public abstract class Game extends Activity implements Screen
 		List<TouchEvent> touchEvents = input.getTouchEvents();
 		Events events = controller.getEvents(touchEvents);
 
-		fps.update();
-
+		fpsLogic.update();
+		
 		update(deltaTime, events);
 	}
 
@@ -98,7 +100,10 @@ public abstract class Game extends Activity implements Screen
 
 		paint();
 		
-		fps.paint(graphics);
+		fpsRender.update();
+		fpsRender.paint(graphics);
+		fpsLogic.paint(graphics);
+		
 		controller.paint(getGraphics());
 	}
 
@@ -112,6 +117,7 @@ public abstract class Game extends Activity implements Screen
 		super.onResume();
 		wakeLock.acquire();
 		this.resume();
+		updateLogic.resume();
 		renderView.resume();
 	}
 
@@ -120,6 +126,7 @@ public abstract class Game extends Activity implements Screen
 	{
 		super.onPause();
 		wakeLock.release();
+		updateLogic.pause();
 		renderView.pause();
 		this.pause();
 
