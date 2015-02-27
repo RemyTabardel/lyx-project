@@ -97,14 +97,14 @@ public abstract class Game extends Activity implements Screen
 	public void paint(float deltaTime)
 	{
 		graphics.clearScreen(Color.BLACK);
-
-		paint();
 		
 		fpsRender.update();
 		fpsRender.paint(graphics);
 		fpsLogic.paint(graphics);
 		
 		controller.paint(getGraphics());
+		
+		paint();
 	}
 
 	public abstract void update(float deltaTime, Events events);
