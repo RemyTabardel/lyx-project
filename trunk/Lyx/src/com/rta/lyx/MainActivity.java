@@ -1,9 +1,7 @@
 package com.rta.lyx;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,14 +15,14 @@ import com.rta.framework.scene.Game;
 
 public class MainActivity extends Game
 {
-	//avec array copy pas besoin de synchronized
-	// CopyOnWriteArrayList<Vector2> listPoints = new CopyOnWriteArrayList<Vector2>();
-	List<Vector2>	listPoints	= Collections.synchronizedList(new ArrayList<Vector2>());
-	int				x, y;
-	Paint paint  = new Paint();
-	
-	Animation		animation	= new Animation(16, 100, true);
-	SpriteSheet		ss;
+	// avec array copy pas besoin de synchronized
+	CopyOnWriteArrayList<Vector2>	listPoints	= new CopyOnWriteArrayList<Vector2>();
+	// List<Vector2> listPoints = Collections.synchronizedList(new ArrayList<Vector2>());
+	int								x, y;
+	Paint							paint		= new Paint();
+
+	Animation						animation	= new Animation(16, 100, true);
+	SpriteSheet						ss;
 
 	@Override
 	public void update(float deltaTime, Events events)
@@ -67,32 +65,29 @@ public class MainActivity extends Game
 	@Override
 	public void paint()
 	{
-		if(paint == null)
+		if (paint == null)
 		{
 			paint.setTextSize(40);
 			paint.setTextAlign(Paint.Align.CENTER);
 			paint.setAntiAlias(true);
 			paint.setColor(Color.WHITE);
 		}
-		
+
 		Graphics graphics = getGraphics();
 		int nbPoints = 0;
 		// List<Vector2> list = Collections.synchronizedList(listPoints);
-		synchronized (listPoints)
-		{
-			nbPoints = listPoints.size();
-			Iterator<Vector2> iterator = listPoints.iterator();
-			while (iterator.hasNext())
-			{
-				Vector2 point = iterator.next();
-				point.x += (x * 2);
-				point.y += (y * 2);
-				graphics.drawCircle((int) point.x, (int) point.y, 20, Color.RED);
 
-			}
+		nbPoints = listPoints.size();
+		Iterator<Vector2> iterator = listPoints.iterator();
+		while (iterator.hasNext())
+		{
+			Vector2 point = iterator.next();
+			point.x += (x * 2);
+			point.y += (y * 2);
+			graphics.drawCircle((int) point.x, (int) point.y, 20, Color.RED);
 		}
 
-		graphics.drawString("Nb points : "+nbPoints, SCREEN_WIDTH-270, 120, paint);
+		graphics.drawString("Nb points : " + nbPoints, SCREEN_WIDTH - 270, 120, paint);
 		if (ss == null)
 		{
 			ss = new SpriteSheet("", graphics);
